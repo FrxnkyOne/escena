@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #f1f2f5;
+  --surface: #ffffff;
+  --ink: #15161a;
+  --ink-2: #3c3e45;
+  --muted: #74767e;
+  --line: #e3e5ea;
+  --brand: #3231e0;
+  --brand-soft: #ececfe;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- anillo aurora (firma del producto) ---------- */
+@property --ang {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.ai-ring {
+  border-radius: 20px;
+  padding: 1.5px;
+  background: conic-gradient(from var(--ang, 0deg), #3231e0, #9c4dff, #27c6d9, #3231e0);
+  animation: spin 6s linear infinite;
+}
+@keyframes spin { to { --ang: 360deg; } }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.4s ease both; }
+
+@keyframes pulse { 50% { opacity: 0.25; } }
+.pulse-dot { animation: pulse 1s infinite; }
+
+/* ---------- escenario (vista cliente) ---------- */
+.stage {
+  background: #0b0c12;
+  color: #f4f4f6;
+  position: relative;
+  overflow: hidden;
+}
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(45% 55% at 18% 12%, rgba(94, 91, 255, 0.3), transparent 60%),
+    radial-gradient(40% 50% at 85% 80%, rgba(255, 106, 91, 0.22), transparent 60%),
+    radial-gradient(35% 45% at 70% 15%, rgba(39, 198, 217, 0.16), transparent 60%);
+  filter: blur(10px);
+  animation: drift 16s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform: translate3d(2%, 3%, 0) scale(1.04); } }
+.stage > * { position: relative; z-index: 1; }
+
+.stage-input {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 14px 18px;
+  color: #fff;
+  outline: 0;
+  transition: border-color 0.15s;
+}
+.stage-input::placeholder { color: #7e8093; }
+.stage-input:focus { border-color: #8b89ff; }
+
+.plan-card {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.045);
+  transition: transform 0.18s, border-color 0.18s, background 0.18s;
+}
+.plan-card:hover { transform: translateY(-3px); }
+.plan-card.sel { border-color: #8b89ff; background: rgba(94, 91, 255, 0.14); }
+
+.tl-dot::before {
+  content: "";
+  position: absolute;
+  left: -31px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #8b89ff;
+  box-shadow: 0 0 0 4px rgba(139, 137, 255, 0.18);
+}
+
+/* ---------- anillo de puntaje del Strategist ---------- */
+.score-ring {
+  background: conic-gradient(var(--brand) calc(var(--p) * 1%), #e9eaf0 0);
+  position: relative;
+}
+.score-ring::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: #fff;
+}
+.score-ring > * { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- impresión / exportación PDF ---------- */
+@media print {
+  .no-print { display: none !important; }
+  .stage::before { animation: none; }
+  .print-panel { display: block !important; page-break-after: always; }
+}
+
+/* ---------- controles compartidos ---------- */
+.input {
+  width: 100%; border: 1px solid var(--line); border-radius: 13px; background: #fff;
+  padding: 13px 16px; font-size: 15px; outline: 0; transition: border-color 0.15s;
+}
+.input:focus { border-color: var(--brand); }
+.btn-primary {
+  border: 0; border-radius: 13px; padding: 14px; background: var(--brand);
+  color: #fff; font-weight: 700; font-size: 14.5px; transition: 0.15s;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(50, 49, 224, 0.35); }
+.btn-primary:disabled { opacity: 0.6; transform: none; box-shadow: none; }
+.btn-ghost {
+  border: 1px solid var(--line); background: #fff; border-radius: 11px; padding: 9px 16px;
+  font-size: 13.5px; font-weight: 600; color: var(--ink); transition: 0.15s;
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-dark {
+  border: 0; border-radius: 11px; padding: 9px 16px; background: var(--ink);
+  color: #fff; font-size: 13.5px; font-weight: 600; transition: 0.15s;
+}
+.btn-dark:hover { transform: translateY(-1px); }
