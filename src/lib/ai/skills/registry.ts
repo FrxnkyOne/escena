@@ -1,4 +1,5 @@
 import { narrativeDirector } from "./narrative-director";
+import { scriptwriter } from "./scriptwriter";
 
 /**
  * La "caja de recetas": todos los skills disponibles, indexados por su id.
@@ -6,6 +7,7 @@ import { narrativeDirector } from "./narrative-director";
  */
 export const SKILLS = {
   "narrative-director": narrativeDirector,
+  scriptwriter: scriptwriter,
 } as const;
 
 /** Catálogo liviano (id, nombre, descripción) para listar skills en la UI. */
